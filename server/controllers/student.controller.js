@@ -68,7 +68,7 @@ export const loginStudent = async (req, res, next) => {
       .cookie("access_token", token, {
         httpOnly: true,
       })
-      .json(rest);
+      .json({ res: rest, token: token });
   } catch (error) {
     next(error);
   }

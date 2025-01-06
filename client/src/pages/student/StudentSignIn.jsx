@@ -21,9 +21,13 @@ const StudentSignIn = () => {
       });
 
       const data = await response.json();
+      console.log(data);
 
       if (response.ok) {
         // If login is successful
+        localStorage.setItem("studentUsername", data.res.username);
+        localStorage.setItem("studentId", data.res.studentId);
+        localStorage.setItem("_id", data.res._id);
         localStorage.setItem("token", data.token); // Save the token to localStorage
         navigate("/student/dashboard"); // Redirect to Student Dashboard
       } else {

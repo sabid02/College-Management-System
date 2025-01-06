@@ -5,6 +5,7 @@ import {
   deleteTopic,
   updateTopic,
   getTopicById,
+  getAllTopics,
 } from "../controllers/project.controller.js";
 import { verifyToken } from "../utils/verifyUser.js"; // Assuming this middleware verifies the teacher
 
@@ -16,5 +17,6 @@ router.get("/get/:teacherId", getTopicsByTeacher);
 router.delete("/delete/:topicId", deleteTopic);
 router.put("/update/:topicId", updateTopic);
 router.get("/get-topic/:topicId", getTopicById);
+router.get("/all-topic", getAllTopics);
 
 export default router;

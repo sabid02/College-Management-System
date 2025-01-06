@@ -125,3 +125,22 @@ export const getTopicById = async (req, res, next) => {
     next(error);
   }
 };
+
+// controllers/topicController.js
+
+export const getAllTopics = async (req, res, next) => {
+  try {
+    // Fetch all topics along with the teacher details
+    const topics = await Topic.find()
+      .populate("teacherId", "name email") // Populate teacher's details like name and email
+      .exec(); // Execute the query
+
+    if (!topics || topics.length === 0) {
+      return next(errorHandler(404, "No topics found"));
+    }
+
+    res.status(200).json(topics); // Return all details of topics
+  } catch (error) {
+    next(error);
+  }
+};

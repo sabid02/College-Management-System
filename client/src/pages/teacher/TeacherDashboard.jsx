@@ -78,7 +78,7 @@ const TeacherDashboard = () => {
 
           {/* My Topic/Project */}
           <Link
-            to="/my-topics"
+            to="/student-list"
             className="block p-6 bg-purple-500 text-white rounded-lg shadow-lg hover:bg-purple-600 transition duration-300"
           >
             <h2 className="text-2xl font-semibold">Student List and ID</h2>

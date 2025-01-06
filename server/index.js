@@ -7,6 +7,7 @@ import teacherRoutes from "./routes/teacher.route.js"; // Teacher routes
 import studentRoutes from "./routes/student.route.js";
 import topicRoutes from "./routes/project.route.js";
 import profileRoutes from "./routes/profile.route.js";
+import topicSelection from "./routes/selection.route.js";
 import cors from "cors";
 
 dotenv.config();
@@ -41,6 +42,7 @@ app.use("/api/teacher", teacherRoutes); // Teacher routes
 app.use("/api/student", studentRoutes);
 app.use("/api/topics", topicRoutes);
 app.use("/api/profiles", profileRoutes);
+app.use("/api/topic", topicSelection);
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
