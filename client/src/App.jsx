@@ -10,6 +10,7 @@ import SignUp from "./pages/admin/SignUp";
 import TeacherSignUp from "./pages/teacher/TeacherSignUp";
 import StudentSignUp from "./pages/student/StudentSignUp";
 import TopicCreation from "./pages/teacher/TopicCreation";
+import TopicUpdate from "./pages/teacher/TopicUpdate";
 
 function App() {
   return (
@@ -21,13 +22,13 @@ function App() {
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
           <Route path="/teacher/signin" element={<TeacherSignIn />} />
           <Route path="/teacher/signup" element={<TeacherSignUp />} />
-          {/* Dynamic route for TeacherDashboard */}
           <Route path="/teacher/dashboard/:id" element={<TeacherDashboard />} />
           <Route path="/student/signin" element={<StudentSignIn />} />
           <Route path="/student/signup" element={<StudentSignUp />} />
           <Route path="/student/dashboard" element={<StudentDashboard />} />
           <Route path="/admin/signup" element={<SignUp />} />
           <Route path="/create/topic" element={<TopicCreation />} />
+          <Route path="/update-topic/:topicId" element={<TopicUpdate />} />
         </Routes>
       </Router>
     </div>

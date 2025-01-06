@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import TeacherNavbar from "../../components/TeacherNavbar";
 
@@ -7,6 +7,7 @@ const TeacherDashboard = () => {
   const [topics, setTopics] = useState([]);
   const [error, setError] = useState(null);
   const teacherId = localStorage.getItem("_id");
+  const navigate = useNavigate(); // For navigation
 
   // Fetch topics on mount
   useEffect(() => {
@@ -22,6 +23,19 @@ const TeacherDashboard = () => {
     };
     fetchTopics();
   }, [teacherId]);
+
+  // Handle topic deletion
+  const handleDelete = async (topicId) => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:7000/api/topics/delete/${topicId}`
+      );
+      setTopics(topics.filter((topic) => topic._id !== topicId)); // Remove the deleted topic from the UI
+      alert(response.data.message);
+    } catch (err) {
+      alert("Failed to delete topic.");
+    }
+  };
 
   return (
     <div>
@@ -92,7 +106,7 @@ const TeacherDashboard = () => {
 
         {/* Topics Section */}
         <div className="mt-12">
-          <h3 className="text-3xl font-semibold mb-4">Your Topics/Projects</h3>
+          <h3 className="text-3xl font-semibold mb-4">My Topics/Projects</h3>
           {error && <p className="text-red-500">{error}</p>}
           {topics.length === 0 ? (
             <p className="text-gray-500">
@@ -110,10 +124,16 @@ const TeacherDashboard = () => {
                     <p className="text-sm text-gray-500">{topic.description}</p>
                   </div>
                   <div className="flex space-x-4">
-                    <button className="px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 transition duration-200">
-                      Update
-                    </button>
-                    <button className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-200">
+                    <Link to={`/update-topic/${topic._id}`}>
+                      <button className="px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 transition duration-200">
+                        Update
+                      </button>
+                    </Link>
+
+                    <button
+                      onClick={() => handleDelete(topic._id)}
+                      className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-200"
+                    >
                       Delete
                     </button>
                   </div>

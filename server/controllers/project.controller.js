@@ -108,3 +108,20 @@ export const deleteTopic = async (req, res, next) => {
     next(error);
   }
 };
+
+export const getTopicById = async (req, res, next) => {
+  const { topicId } = req.params; // Get topicId from URL params
+
+  try {
+    // Find the topic by its topicId
+    const topic = await Topic.findById(topicId);
+
+    if (!topic) {
+      return next(errorHandler(404, "Topic not found"));
+    }
+
+    res.status(200).json(topic);
+  } catch (error) {
+    next(error);
+  }
+};
