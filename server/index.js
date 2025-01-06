@@ -5,12 +5,21 @@ import cookieParser from "cookie-parser";
 import adminRoutes from "./routes/admin.route.js";
 import teacherRoutes from "./routes/teacher.route.js"; // Teacher routes
 import studentRoutes from "./routes/student.route.js";
+import topicRoutes from "./routes/project.route.js";
+import profileRoutes from "./routes/profile.route.js";
 import cors from "cors";
 
 dotenv.config();
 const app = express();
 
-app.use(cors());
+const corsOptions = {
+  origin: "*",
+  credentials: true, //access-control-allow-credentials:true
+  optionSuccessStatus: 200,
+};
+
+app.use(cors(corsOptions));
+
 app.use(express.json());
 app.use(cookieParser());
 
@@ -30,6 +39,8 @@ app.listen(process.env.PORT, () => {
 app.use("/api/admin", adminRoutes); // Admin routes accessible at /api/admin
 app.use("/api/teacher", teacherRoutes); // Teacher routes
 app.use("/api/student", studentRoutes);
+app.use("/api/topics", topicRoutes);
+app.use("/api/profiles", profileRoutes);
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;

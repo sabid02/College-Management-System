@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const TeacherSignIn = () => {
   const [email, setEmail] = useState("");
@@ -21,13 +22,18 @@ const TeacherSignIn = () => {
       });
 
       const data = await response.json();
+      console.log(data);
+
+      Cookies.set("access_token", data.token);
 
       if (response.ok) {
-        // Save token or session information if needed
-        localStorage.setItem("teacherToken", data.token);
+        // Save teacher information in localStorage
+        localStorage.setItem("teacherUsername", data.res.username);
+        localStorage.setItem("teacherId", data.res.teacherId);
+        localStorage.setItem("_id", data.res._id);
 
-        // Navigate to the teacher dashboard
-        navigate("/teacher/dashboard");
+        // Navigate to the dashboard
+        navigate(`/teacher/dashboard/${data.res._id}`);
       } else {
         setError(data.message || "Invalid credentials. Please try again.");
       }
@@ -75,7 +81,6 @@ const TeacherSignIn = () => {
           Sign In
         </button>
 
-        {/* Link to Sign Up Page */}
         <div className="mt-4 text-center">
           <p className="text-sm text-gray-600">
             Don't have an account?{" "}
