@@ -29,17 +29,17 @@ export const selectTopic = async (req, res) => {
   }
 };
 
-export const getTopicSelections = async (req, res) => {
+// Add an endpoint to fetch selected topics for the logged-in user
+export const getUserSelectedTopics = async (req, res) => {
+  const { studentId } = req.params; // Use the student's ID from the request
   try {
-    // Fetch topic selections, populate studentId with username and topicId with topic details
-    const selections = await TopicSelection.find({ status: "pending" })
-      .populate("topicId") // Populate the topicId with full topic details
-      .populate("studentId", "username"); // Populate studentId with username
-
-    res.status(200).json(selections);
+    const selectedTopics = await TopicSelection.find({ studentId })
+      .populate("topicId") // Populate the topic details
+      .populate("studentId", "username"); // Populate student details
+    res.status(200).json(selectedTopics);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Error fetching topic selections." });
+    res.status(500).json({ message: "Error fetching selected topics." });
   }
 };
 

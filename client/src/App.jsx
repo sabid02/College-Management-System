@@ -11,6 +11,9 @@ import TeacherSignUp from "./pages/teacher/TeacherSignUp";
 import StudentSignUp from "./pages/student/StudentSignUp";
 import TopicCreation from "./pages/teacher/TopicCreation";
 import TopicUpdate from "./pages/teacher/TopicUpdate";
+import Approval from "./pages/teacher/Approval";
+import TopicBank from "./components/TopicBank";
+import StudentList from "./components/StudentList";
 
 function App() {
   return (
@@ -29,6 +32,9 @@ function App() {
           <Route path="/admin/signup" element={<SignUp />} />
           <Route path="/create/topic" element={<TopicCreation />} />
           <Route path="/update-topic/:topicId" element={<TopicUpdate />} />
+          <Route path="/approvals" element={<Approval />} />
+          <Route path="/topic-bank" element={<TopicBank />} />
+          <Route path="/student-list" element={<StudentList />} />
         </Routes>
       </Router>
     </div>

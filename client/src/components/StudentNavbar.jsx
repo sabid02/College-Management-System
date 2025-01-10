@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const StudentNavbar = () => {
   const [profile, setProfile] = useState({
     username: localStorage.getItem("studentUsername"),
     _id: localStorage.getItem("studentId"),
   });
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const username = localStorage.getItem("studentUsername");
@@ -17,6 +19,21 @@ const StudentNavbar = () => {
       setProfile({ username: "Guest", _id: null });
     }
   }, []);
+
+  const handleLogout = () => {
+    // Clear local storage
+    localStorage.clear();
+
+    // Optionally, clear cookies (if any cookies are set)
+    document.cookie.split(";").forEach((cookie) => {
+      const eqPos = cookie.indexOf("=");
+      const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+      document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/`;
+    });
+
+    // Redirect to the home page
+    navigate("/");
+  };
 
   return (
     <nav className="bg-gradient-to-r from-blue-500 to-blue-700 shadow-lg">
@@ -52,12 +69,12 @@ const StudentNavbar = () => {
             />
           </div>
           {/* Logout Button */}
-          <Link
-            to="/logout"
+          <button
+            onClick={handleLogout}
             className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-300"
           >
             Logout
-          </Link>
+          </button>
         </div>
       </div>
     </nav>

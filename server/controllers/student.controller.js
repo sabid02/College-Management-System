@@ -73,3 +73,27 @@ export const loginStudent = async (req, res, next) => {
     next(error);
   }
 };
+
+// Get All Students
+export const getStudents = async (req, res, next) => {
+  try {
+    const students = await Student.find({}, { password: 0 }); // Exclude password from response
+    res.status(200).json(students);
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Delete a Student
+export const deleteStudent = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const deletedStudent = await Student.findByIdAndDelete(id);
+    if (!deletedStudent) {
+      return next(errorHandler(404, "Student not found"));
+    }
+    res.status(200).json({ message: "Student deleted successfully" });
+  } catch (error) {
+    next(error);
+  }
+};

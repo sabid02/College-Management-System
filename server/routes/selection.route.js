@@ -1,7 +1,7 @@
 import express from "express";
 import {
   selectTopic,
-  getTopicSelections,
+  getUserSelectedTopics,
   approveOrRejectTopic,
   cancelTopicSelection,
 } from "../controllers/selection.controller.js";
@@ -12,7 +12,7 @@ router.post("/select", selectTopic);
 router.delete("/cancel/:topicId", cancelTopicSelection);
 
 // Route for teachers to view topic selections
-router.get("/selections", getTopicSelections);
+router.get("/selected/:studentId", getUserSelectedTopics);
 
 // Route for teachers to approve or reject a topic
 router.put("/approve-reject", approveOrRejectTopic);

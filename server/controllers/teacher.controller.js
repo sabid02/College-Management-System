@@ -73,3 +73,13 @@ export const loginTeacher = async (req, res, next) => {
     next(error);
   }
 };
+
+// Get All Teachers
+export const getAllTeachers = async (req, res, next) => {
+  try {
+    const teachers = await Teacher.find({}, { password: 0 }); // Exclude the password field
+    res.status(200).json(teachers);
+  } catch (error) {
+    next(errorHandler(500, "Failed to fetch teachers"));
+  }
+};
